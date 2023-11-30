@@ -22,7 +22,8 @@ dependencies {
     implementation("gg.jte:jte:3.0.1")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    implementation(kotlin("script-runtime"))
+    //implementation(kotlin("script-runtime"))
+    //implementation("org.jetbrains.kotlin:kotlin-script-runtime")
 }
 
 tasks.test {
