@@ -4,6 +4,8 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 plugins {
     id("java")
     application
+    kotlin("plugin.lombok") version "1.9.21"
+    id("io.freefair.lombok") version "8.1.0"
 }
 application {
     mainClass.set("org.example.hexlet.HelloWorld")
@@ -22,6 +24,9 @@ dependencies {
     implementation("gg.jte:jte:3.0.1")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    implementation("gg.jte:jte:3.0.1")
+    implementation("io.javalin:javalin-rendering:5.6.2")
+
     //implementation(kotlin("script-runtime"))
     //implementation("org.jetbrains.kotlin:kotlin-script-runtime")
 }
