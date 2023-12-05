@@ -1,6 +1,6 @@
 @import org.example.hexlet.dto.courses.CoursePage
 @param CoursePage page
-
+@template.layout.page(content = @`
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,3 +13,4 @@
 </main>
 </body>
 </html>
+`)
