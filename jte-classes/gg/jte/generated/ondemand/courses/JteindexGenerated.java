@@ -2,7 +2,7 @@ package gg.jte.generated.ondemand.courses;
 import org.example.hexlet.dto.courses.CoursesPage;
 public final class JteindexGenerated {
 	public static final String JTE_NAME = "courses/index.jte";
-	public static final int[] JTE_LINE_INFO = {0,0,1,1,1,3,3,3,3,4,4,4,5,5,7,7,8,8,10,10,10,10,10,10,10,11,11,11,13,13,14,14,15,15,15,16};
+	public static final int[] JTE_LINE_INFO = {0,0,1,1,1,3,3,3,3,4,4,4,5,5,7,7,9,9,9,9,9,9,9,9,12,12,14,14,14,14,14,14,14,15,15,15,17,17,18,18,20,20,20,21};
 	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, CoursesPage page) {
 		jteOutput.writeContent("\n");
 		gg.jte.generated.ondemand.layout.JtepageGenerated.render(jteOutput, jteHtmlInterceptor, new gg.jte.html.HtmlContent() {
@@ -14,7 +14,15 @@ public final class JteindexGenerated {
 				if (page.getCourses().isEmpty()) {
 					jteOutput.writeContent("\n            <p>Пока не добавлено ни одного курса</p>\n        ");
 				} else {
-					jteOutput.writeContent("\n            ");
+					jteOutput.writeContent("\n            <form action=\"/courses\" method=\"get\">\n                <input type=\"search\" name=\"term\"");
+					if (gg.jte.runtime.TemplateUtils.isAttributeRendered(page.getTerm())) {
+						jteOutput.writeContent(" value=\"");
+						jteOutput.setContext("input", "value");
+						jteOutput.writeUserContent(page.getTerm());
+						jteOutput.setContext("input", null);
+						jteOutput.writeContent("\"");
+					}
+					jteOutput.writeContent(" />\n                <input type=\"submit\" value=\"search\" />\n            </form>\n            ");
 					for (var course : page.getCourses()) {
 						jteOutput.writeContent("\n               <div>\n                   <h2><a href=\"/courses/");
 						jteOutput.setContext("a", "href");
@@ -30,7 +38,7 @@ public final class JteindexGenerated {
 					}
 					jteOutput.writeContent("\n        ");
 				}
-				jteOutput.writeContent("\n");
+				jteOutput.writeContent("\n    <a href=\"/courses/build\">New course</a>\n");
 			}
 		}, null);
 		jteOutput.writeContent("\n");

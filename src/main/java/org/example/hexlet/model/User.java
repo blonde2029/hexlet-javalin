@@ -1,25 +1,22 @@
 package org.example.hexlet.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 @Getter
+@Setter
 public final class User {
-    private long id;
+    private Long id;
 
     @ToString.Include
-    private String first_name;
-    private String last_name;
+    private String name;
     private String email;
+    private String password;
 
-    public User(long id, String first_name, String last_name, String email) {
+    public User(String name, String email, String password) {
         this.id = id;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.name = name;
         this.email = email;
-    }
-    public String getName() {
-        return this.first_name + " " + this.last_name;
+        this.password = password;
     }
 }

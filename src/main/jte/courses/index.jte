@@ -6,6 +6,10 @@
         @if(page.getCourses().isEmpty())
             <p>Пока не добавлено ни одного курса</p>
         @else
+            <form action="/courses" method="get">
+                <input type="search" name="term" value="${page.getTerm()}" />
+                <input type="submit" value="search" />
+            </form>
             @for(var course : page.getCourses())
                <div>
                    <h2><a href="/courses/${course.getId()}">${course.getName()}</a></h2>
@@ -13,4 +17,5 @@
                </div>
             @endfor
         @endif
+    <a href="/courses/build">New course</a>
 `)
