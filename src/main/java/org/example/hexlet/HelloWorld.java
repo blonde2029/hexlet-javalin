@@ -1,8 +1,11 @@
 package org.example.hexlet;
 
 import io.javalin.Javalin;
+import io.javalin.validation.ValidationException;
+import org.example.hexlet.dto.courses.BuildCoursePage;
 import org.example.hexlet.dto.courses.CoursePage;
 import org.example.hexlet.dto.courses.CoursesPage;
+import org.example.hexlet.dto.users.BuildUserPage;
 import org.example.hexlet.dto.users.UserPage;
 import org.example.hexlet.dto.users.UsersPage;
 import org.example.hexlet.model.Course;
@@ -40,17 +43,25 @@ public class HelloWorld {
         });
 
         app.get("/users/build", ctx -> {
-            ctx.render("users/build.jte");
+            var page = new BuildUserPage();
+            ctx.render("users/build.jte", Collections.singletonMap("page", page));
         });
         app.post("/users", ctx -> {
             var name = ctx.formParam("name").trim();
             var email = ctx.formParam("email").trim().toLowerCase();
-            var password = ctx.formParam("password");
-            var passwordConfirmation = ctx.formParam("passwordConfirmation");
+            try {
+                var passwordConfirmation = ctx.formParam("passwordConfirmation");
+                var password = ctx.formParamAsClass("password", String.class)
+                        .check(p -> p == passwordConfirmation, "Password not confirmed")
+                        .get();
+                var user = new User(name, email, password);
+                UserRepository.save(user);
+                ctx.redirect("/users");
+            } catch (ValidationException e) {
+                var page = new BuildUserPage(name, email, e.getErrors());
+                ctx.render("users/build.jte", Collections.singletonMap("page", page));
+            }
 
-            var user = new User(name, email, password);
-            UserRepository.save(user);
-            ctx.redirect("/users");
         });
 
         app.get("/users/{id}", ctx -> {
@@ -80,16 +91,27 @@ public class HelloWorld {
         });
 
         app.get("/courses/build", ctx -> {
-           ctx.render("courses/build.jte");
+            var page = new BuildCoursePage();
+           ctx.render("courses/build.jte", Collections.singletonMap("page", page));
         });
 
         app.post("/courses", ctx -> {
-            var name = ctx.formParam("name").trim();
-            var description = ctx.formParam("description").trim();
-            var course = new Course(name, description);
-            CourseRepository.save(course);
-
-            ctx.redirect("/courses");
+            var nameDefault = ctx.formParamAsClass("name", String.class).get().trim();
+            var descriptionDefault = ctx.formParam("description");
+            try {
+              var name = ctx.formParamAsClass("name", String.class)
+                      .check(n -> n.length() > 2, "Name must be longer than 2 symbols")
+                      .get().trim();
+              var description = ctx.formParamAsClass("description", String.class)
+                        .check(d -> d.length() > 10, "Description must be longer than 10 symbols")
+                        .get().trim();
+              var course = new Course(name, description);
+              CourseRepository.save(course);
+              ctx.redirect("/courses");
+            } catch (ValidationException e) {
+              var page = new BuildCoursePage(nameDefault, descriptionDefault, e.getErrors());
+              ctx.render("courses/build.jte", Collections.singletonMap("page", page));
+            }
         });
         app.get("/courses/{id}", ctx -> {
             var id = Long.parseLong(ctx.pathParam("id"));
