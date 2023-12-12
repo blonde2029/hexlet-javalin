@@ -1,4 +1,5 @@
 @import gg.jte.Content
+@import org.example.hexlet.dto.NamedRoutes
 @param Content content
 @param Content footer = null
 
@@ -13,8 +14,8 @@
 <p>
     <h1><a href="/">Main page</a></h1>
     <div>
-        <a href="/users">Users</a>
-        <a href="/courses">Courses</a>
+        <a href="${NamedRoutes.UsersPath()}">Users</a>
+        <a href="${NamedRoutes.CoursesPath()}">Courses</a>
     </div>
 </p>
 ${content}

@@ -1,8 +1,9 @@
 package gg.jte.generated.ondemand.courses;
+import org.example.hexlet.dto.NamedRoutes;
 import org.example.hexlet.dto.courses.CoursesPage;
 public final class JteindexGenerated {
 	public static final String JTE_NAME = "courses/index.jte";
-	public static final int[] JTE_LINE_INFO = {0,0,1,1,1,3,3,3,3,4,4,4,5,5,7,7,9,9,9,9,9,9,9,9,12,12,14,14,14,14,14,14,14,15,15,15,17,17,18,18,20,20,20,21};
+	public static final int[] JTE_LINE_INFO = {0,0,1,2,2,2,4,4,4,4,5,5,5,6,6,8,8,10,10,10,10,10,10,10,10,13,13,15,15,15,15,15,15,15,15,15,15,15,16,16,16,18,18,19,19,20,20,20,20,20,20,20,20,21,21,21,22};
 	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, CoursesPage page) {
 		jteOutput.writeContent("\n");
 		gg.jte.generated.ondemand.layout.JtepageGenerated.render(jteOutput, jteHtmlInterceptor, new gg.jte.html.HtmlContent() {
@@ -24,11 +25,15 @@ public final class JteindexGenerated {
 					}
 					jteOutput.writeContent(" />\n                <input type=\"submit\" value=\"search\" />\n            </form>\n            ");
 					for (var course : page.getCourses()) {
-						jteOutput.writeContent("\n               <div>\n                   <h2><a href=\"/courses/");
-						jteOutput.setContext("a", "href");
-						jteOutput.writeUserContent(course.getId());
-						jteOutput.setContext("a", null);
-						jteOutput.writeContent("\">");
+						jteOutput.writeContent("\n               <div>\n                   <h2><a");
+						if (gg.jte.runtime.TemplateUtils.isAttributeRendered(NamedRoutes.CoursePath(course.getId()))) {
+							jteOutput.writeContent(" href=\"");
+							jteOutput.setContext("a", "href");
+							jteOutput.writeUserContent(NamedRoutes.CoursePath(course.getId()));
+							jteOutput.setContext("a", null);
+							jteOutput.writeContent("\"");
+						}
+						jteOutput.writeContent(">");
 						jteOutput.setContext("a", null);
 						jteOutput.writeUserContent(course.getName());
 						jteOutput.writeContent("</a></h2>\n                   <p>");
@@ -38,7 +43,15 @@ public final class JteindexGenerated {
 					}
 					jteOutput.writeContent("\n        ");
 				}
-				jteOutput.writeContent("\n    <a href=\"/courses/build\">New course</a>\n");
+				jteOutput.writeContent("\n    <a");
+				if (gg.jte.runtime.TemplateUtils.isAttributeRendered(NamedRoutes.BuildCoursePath())) {
+					jteOutput.writeContent(" href=\"");
+					jteOutput.setContext("a", "href");
+					jteOutput.writeUserContent(NamedRoutes.BuildCoursePath());
+					jteOutput.setContext("a", null);
+					jteOutput.writeContent("\"");
+				}
+				jteOutput.writeContent(">New course</a>\n");
 			}
 		}, null);
 		jteOutput.writeContent("\n");
