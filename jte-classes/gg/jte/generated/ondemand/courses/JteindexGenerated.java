@@ -35,7 +35,7 @@ public final class JteindexGenerated {
 						}
 						jteOutput.writeContent(">");
 						jteOutput.setContext("a", null);
-						jteOutput.writeUserContent(course.getName());
+						jteOutput.writeUserContent(course.getTitle());
 						jteOutput.writeContent("</a></h2>\n                   <p>");
 						jteOutput.setContext("p", null);
 						jteOutput.writeUserContent(course.getDescription());

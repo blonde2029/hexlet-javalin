@@ -1,5 +1,6 @@
 package org.example.hexlet.repository;
 
+import io.javalin.http.NotFoundResponse;
 import org.example.hexlet.model.User;
 
 import java.util.ArrayList;
@@ -25,6 +26,11 @@ public class UserRepository {
                 .findAny()
                 .orElse(null);
         return Optional.of(user);
+    }
+
+    public static void delete(Long id) {
+        var user = find(id).orElseThrow(() -> new NotFoundResponse("User with " + id + " not found"));
+        enteties.remove(user);
     }
     public static List<User> getEnteties() {
         return enteties;

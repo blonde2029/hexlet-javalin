@@ -17,7 +17,7 @@ public class CourseRepository {
 
     public static List<Course> search(String term) {
         var courses = entities.stream()
-                .filter(entity -> entity.getName().startsWith(term))
+                .filter(entity -> entity.getTitle().startsWith(term))
                 .toList();
         return courses;
     }

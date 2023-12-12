@@ -18,11 +18,11 @@ public final class JtebuildGenerated {
 			}
 			jteOutput.writeContent("\n    </ul>\n");
 		}
-		jteOutput.writeContent("\n<form action=\"/courses\" method=\"post\">\n    <div>\n        <label>\n            Course name\n            <input type=\"text\" name=\"name\"");
-		if (gg.jte.runtime.TemplateUtils.isAttributeRendered(page.getName())) {
+		jteOutput.writeContent("\n<form action=\"/courses\" method=\"post\">\n    <div>\n        <label>\n            Course name\n            <input type=\"text\" name=\"title\"");
+		if (gg.jte.runtime.TemplateUtils.isAttributeRendered(page.getTitle())) {
 			jteOutput.writeContent(" value=\"");
 			jteOutput.setContext("input", "value");
-			jteOutput.writeUserContent(page.getName());
+			jteOutput.writeUserContent(page.getTitle());
 			jteOutput.setContext("input", null);
 			jteOutput.writeContent("\"");
 		}

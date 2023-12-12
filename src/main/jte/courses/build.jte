@@ -13,7 +13,7 @@
     <div>
         <label>
             Course name
-            <input type="text" name="name" value="${page.getName()}"/>
+            <input type="text" name="title" value="${page.getTitle()}"/>
         </label>
     </div>
     <div>

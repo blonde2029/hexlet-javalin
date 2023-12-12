@@ -13,7 +13,7 @@
             </form>
             @for(var course : page.getCourses())
                <div>
-                   <h2><a href="${NamedRoutes.CoursePath(course.getId())}">${course.getName()}</a></h2>
+                   <h2><a href="${NamedRoutes.CoursePath(course.getId())}">${course.getTitle()}</a></h2>
                    <p>${course.getDescription()}</p>
                </div>
             @endfor

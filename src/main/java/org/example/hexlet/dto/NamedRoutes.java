@@ -2,10 +2,10 @@ package org.example.hexlet.dto;
 
 public class NamedRoutes {
     public static String UsersPath() {
-        return "/u";
+        return "/users";
     }
     public static String BuildUserPath() {
-        return "/u/build";
+        return "/users/build";
     }
 
     public static String UserPath(Long id) {
@@ -13,9 +13,15 @@ public class NamedRoutes {
     }
 
     public static String UserPath(String id) {
-        return "/u/" + id;
+        return "/users/" + id;
     }
 
+    public static String EditUserPath(Long id) {
+        return EditUserPath(String.valueOf(id));
+    }
+    public static String EditUserPath(String id) {
+        return "/users/" + id + "/edit";
+    }
     public static String CoursesPath() {
         return "/courses";
     }
@@ -28,5 +34,9 @@ public class NamedRoutes {
     }
     public static String CoursePath(String id) {
         return "/courses/" + id;
+    }
+
+    public static String EditCoursePath(Long id) {
+        return CoursePath(String.valueOf(id)) + "/edit";
     }
 }

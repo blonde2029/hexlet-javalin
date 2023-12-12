@@ -13,7 +13,7 @@ import java.util.Map;
 @Getter
 
 public class BuildCoursePage {
-    private String name;
+    private String title;
     private String description;
     private Map<String, List<ValidationError<Object>>> errors;
 }
