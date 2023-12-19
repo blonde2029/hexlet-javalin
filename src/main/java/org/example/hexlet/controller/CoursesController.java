@@ -1,8 +1,9 @@
-package org.example.hexlet.dto;
+package org.example.hexlet.controller;
 
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
 import io.javalin.validation.ValidationException;
+import org.example.hexlet.dto.NamedRoutes;
 import org.example.hexlet.dto.courses.BuildCoursePage;
 import org.example.hexlet.dto.courses.CoursePage;
 import org.example.hexlet.dto.courses.CoursesPage;
@@ -45,7 +46,6 @@ public class CoursesController {
 
     public static void create(Context ctx) {
         try {
-//            var title = ctx.formParam("title")
             var title = ctx.formParamAsClass("title", String.class)
                     .check(t -> t.length() > 2, "Title must be longer than 2 symbols")
                     .get();

@@ -1,9 +1,13 @@
 package org.example.hexlet;
 
 import io.javalin.Javalin;
-import org.example.hexlet.dto.CoursesController;
+import org.example.hexlet.controller.CoursesController;
+import org.example.hexlet.controller.SessionsController;
+import org.example.hexlet.controller.UsersController;
+import org.example.hexlet.dto.MainPage;
 import org.example.hexlet.dto.NamedRoutes;
-import org.example.hexlet.dto.UsersController;
+
+import java.util.Collections;
 
 public class HelloWorld {
     public static int getPort() {
@@ -19,7 +23,12 @@ public class HelloWorld {
             config.plugins.enableDevLogging();
         });
         app.get("/", ctx -> {
-            ctx.render("layout/page.jte");
+//            var visited = Boolean.valueOf(ctx.cookie("visited"));
+//            var page = new MainPage(visited);
+//            ctx.render("layout/page.jte", Collections.singletonMap("page", page));
+//            ctx.cookie("visited", String.valueOf(true));
+            var page = new MainPage(ctx.sessionAttribute("currentUser"));
+            ctx.render("layout/page.jte", Collections.singletonMap("page", page));
         });
 
         //users
@@ -39,6 +48,14 @@ public class HelloWorld {
         app.get(NamedRoutes.BuildCoursePath(), CoursesController::build);
         app.post(NamedRoutes.CoursesPath(), CoursesController::create);
         app.get(NamedRoutes.CoursePath("{id}"), CoursesController::show);
+
+
+// Отображение формы логина
+        app.get("/sessions/build", SessionsController::build);
+// Процесс логина
+        app.post("/sessions", SessionsController::create);
+// Процесс выхода из аккаунта
+        app.delete("/sessions", SessionsController::destroy);
         return app;
     }
 }

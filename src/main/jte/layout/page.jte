@@ -1,8 +1,10 @@
 @import gg.jte.Content
 @import org.example.hexlet.dto.NamedRoutes
+@import org.example.hexlet.dto.MainPage
+
 @param Content content
 @param Content footer = null
-
+@param MainPage page
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,6 +15,14 @@
 <body>
 <p>
     <h1><a href="/">Main page</a></h1>
+<%--    @if (!page.isVisited())--%>
+<%--        <p>This message shows only once. To see it again delete cookies.</p>--%>
+<%--    @endif--%>
+@if (page.getCurrentUser() != null)
+    Добро пожаловать, ${page.getCurrentUser()}.
+    Чтобы разлогиниться, удалите куку JSESSIONID из браузера
+@endif
+<h2><a href="/sessions/build">Login</a></h2>
     <div>
         <a href="${NamedRoutes.UsersPath()}">Users</a>
         <a href="${NamedRoutes.CoursesPath()}">Courses</a>
