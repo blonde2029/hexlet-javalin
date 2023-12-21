@@ -1,10 +1,10 @@
 @import gg.jte.Content
 @import org.example.hexlet.dto.NamedRoutes
-@import org.example.hexlet.dto.MainPage
+@import org.example.hexlet.dto.BasePage
 
 @param Content content
 @param Content footer = null
-@param MainPage page
+@param BasePage page = null
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,9 +18,12 @@
 <%--    @if (!page.isVisited())--%>
 <%--        <p>This message shows only once. To see it again delete cookies.</p>--%>
 <%--    @endif--%>
-@if (page.getCurrentUser() != null)
-    Добро пожаловать, ${page.getCurrentUser()}.
-    Чтобы разлогиниться, удалите куку JSESSIONID из браузера
+<%--@if (page.getCurrentUser() != null)--%>
+<%--    Добро пожаловать, ${page.getCurrentUser()}.--%>
+<%--    Чтобы разлогиниться, удалите куку JSESSIONID из браузера--%>
+<%--@endif--%>
+@if (page != null && page.getFlash() != null)
+    <p>${page.getFlash()}</p>
 @endif
 <h2><a href="/sessions/build">Login</a></h2>
     <div>

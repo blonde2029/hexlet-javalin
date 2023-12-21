@@ -11,6 +11,7 @@
     </ul>
 @endif
 
+@template.layout.page(page = page, content = @`
 <form action="/users" method="post">
     <div>
         <label>
@@ -38,3 +39,4 @@
     </div>
     <input type="submit" value="Register" />
 </form>
+`)

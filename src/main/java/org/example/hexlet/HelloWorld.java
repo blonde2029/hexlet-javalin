@@ -4,7 +4,7 @@ import io.javalin.Javalin;
 import org.example.hexlet.controller.CoursesController;
 import org.example.hexlet.controller.SessionsController;
 import org.example.hexlet.controller.UsersController;
-import org.example.hexlet.dto.MainPage;
+import org.example.hexlet.dto.BasePage;
 import org.example.hexlet.dto.NamedRoutes;
 
 import java.util.Collections;
@@ -27,7 +27,8 @@ public class HelloWorld {
 //            var page = new MainPage(visited);
 //            ctx.render("layout/page.jte", Collections.singletonMap("page", page));
 //            ctx.cookie("visited", String.valueOf(true));
-            var page = new MainPage(ctx.sessionAttribute("currentUser"));
+//            var page = new MainPage(ctx.sessionAttribute("currentUser"));
+            var page = new BasePage();
             ctx.render("layout/page.jte", Collections.singletonMap("page", page));
         });
 

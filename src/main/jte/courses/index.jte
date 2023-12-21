@@ -1,10 +1,8 @@
-@import org.example.hexlet.dto.MainPage
 @import org.example.hexlet.dto.NamedRoutes
 @import org.example.hexlet.dto.courses.CoursesPage
-@import org.example.hexlet.dto.MainPage
 @param CoursesPage page
 
-@template.layout.page(content = @`
+@template.layout.page(page = page, content = @`
         <h1>${page.getHeader()}</h1>
         @if(page.getCourses().isEmpty())
             <p>Пока не добавлено ни одного курса</p>
