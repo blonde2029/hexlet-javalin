@@ -1,24 +1,45 @@
 package org.example.hexlet;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import io.javalin.Javalin;
 import org.example.hexlet.controller.CoursesController;
 import org.example.hexlet.controller.SessionsController;
 import org.example.hexlet.controller.UsersController;
 import org.example.hexlet.dto.BasePage;
 import org.example.hexlet.dto.NamedRoutes;
+import org.example.hexlet.repository.BaseRepository;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.sql.SQLException;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 public class HelloWorld {
     public static int getPort() {
         String port = System.getenv().getOrDefault("PORT", "7070");
         return Integer.parseInt(port);
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, IOException {
         var app = getApp();
         app.start(getPort());
     }
-    public static Javalin getApp() {
+    public static Javalin getApp() throws IOException, SQLException {
+        var hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl("jdbc:h2:mem:hexlet_project;DB_CLOSE_DELAY=-1;");
+        var dataSource = new HikariDataSource(hikariConfig);
+        var url = HelloWorld.class.getClassLoader().getResource("schema.sql");
+        var file = new File(url.getFile());
+        var sql = Files.lines(file.toPath()).collect(Collectors.joining());
+
+        try (var connection = dataSource.getConnection();
+             var statement = connection.createStatement()) {
+          statement.execute(sql);
+        }
+
+        BaseRepository.dataSource = dataSource;
         var app = Javalin.create(config -> {
             config.plugins.enableDevLogging();
         });
@@ -39,7 +60,7 @@ public class HelloWorld {
         app.post(NamedRoutes.UsersPath(), UsersController::create);
         app.get(NamedRoutes.EditUserPath("{id}"), UsersController::edit);
         app.patch(NamedRoutes.UserPath("{id}"), UsersController::update);
-        app.delete(NamedRoutes.UserPath("{id}"), UsersController::destroy);
+//        app.delete(NamedRoutes.UserPath("{id}"), UsersController::destroy);
         app.get(NamedRoutes.UserPath("{id}"), UsersController::show);
 
 

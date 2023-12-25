@@ -10,12 +10,13 @@ import org.example.hexlet.dto.courses.CoursesPage;
 import org.example.hexlet.model.Course;
 import org.example.hexlet.repository.CourseRepository;
 
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CoursesController {
-    public static void index(Context ctx) {
+    public static void index(Context ctx) throws SQLException {
         var header = "Courses we have: ";
         var term = ctx.queryParam("term");
         var coursesList = CourseRepository.getEntities();
@@ -33,7 +34,7 @@ public class CoursesController {
         ctx.render("courses/index.jte", Collections.singletonMap("page", page));
     }
 
-    public static void show(Context ctx) {
+    public static void show(Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         var course = CourseRepository.find(id).orElseThrow(() -> new NotFoundResponse("Course with id " + id + "not found"));
         var page = new CoursePage(course);
@@ -45,7 +46,7 @@ public class CoursesController {
         ctx.render("courses/build.jte", Collections.singletonMap("page", page));
     }
 
-    public static void create(Context ctx) {
+    public static void create(Context ctx) throws SQLException {
         try {
             var title = ctx.formParamAsClass("title", String.class)
                     .check(t -> t.length() > 2, "Title must be longer than 2 symbols")

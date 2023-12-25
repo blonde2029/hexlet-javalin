@@ -29,6 +29,9 @@ dependencies {
 
     implementation("org.apache.commons:commons-text:1.11.0")
     implementation("com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer:20180219.1")
+    implementation("com.h2database:h2:2.2.220")
+    implementation("com.zaxxer:HikariCP:5.0.1")
+
 //    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.0")
 
 

@@ -11,17 +11,18 @@ import org.example.hexlet.dto.users.UsersPage;
 import org.example.hexlet.model.User;
 import org.example.hexlet.repository.UserRepository;
 
+import java.sql.SQLException;
 import java.util.Collections;
 
 public class UsersController {
-    public static void index(Context ctx) {
+    public static void index(Context ctx) throws SQLException {
         var users = UserRepository.getEnteties();
         var page = new UsersPage(users);
         page.setFlash(ctx.consumeSessionAttribute("flash"));
         ctx.render("users/index.jte", Collections.singletonMap("page", page));
     }
 
-    public static void show(Context ctx) {
+    public static void show(Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         var user = UserRepository.find(id).orElseThrow(() -> new NotFoundResponse("Entity wit id " + id + " not found"));
         var page = new UserPage(user);
@@ -33,7 +34,7 @@ public class UsersController {
         ctx.render("users/build.jte", Collections.singletonMap("page", page));
     }
 
-    public static void create(Context ctx) {
+    public static void create(Context ctx) throws SQLException {
         var name = ctx.formParam("name");
         var email = ctx.formParam("email");
         try {
@@ -53,14 +54,14 @@ public class UsersController {
         }
     }
 
-    public static void edit(Context ctx) {
+    public static void edit(Context ctx) throws SQLException {
         var id = ctx.formParamAsClass("id", Long.class).get();
         var user = UserRepository.find(id).orElseThrow(() -> new NotFoundResponse("User with id " + id + " not found"));
         var page = new UserPage(user);
         ctx.render("users/edit", Collections.singletonMap("page", page));
     }
 
-    public static void update(Context ctx) {
+    public static void update(Context ctx) throws SQLException {
         var id = ctx.formParamAsClass("id", Long.class).get();
         var name = ctx.formParam("name");
         var email = ctx.formParam("email");
@@ -73,9 +74,9 @@ public class UsersController {
         ctx.redirect(NamedRoutes.UsersPath());
     }
 
-    public static void destroy(Context ctx) {
-        var id = ctx.formParamAsClass("id", Long.class).get();
-        UserRepository.delete(id);
-        ctx.redirect(NamedRoutes.UsersPath());
-    }
+//    public static void destroy(Context ctx) {
+//        var id = ctx.formParamAsClass("id", Long.class).get();
+//        UserRepository.delete(id);
+//        ctx.redirect(NamedRoutes.UsersPath());
+//    }
 }
