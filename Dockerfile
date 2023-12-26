@@ -1,18 +1,21 @@
 FROM eclipse-temurin:20-jdk
 
+ARG GRADLE_VERSION=8.2
 
-COPY gradle gradle
-COPY build.gradle.kts .
-COPY settings.gradle.kts .
-COPY gradlew .
+RUN apt-get update && apt-get install -yq unzip
 
-RUN ./gradlew --no-daemon dependencies
+RUN wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
+    && unzip gradle-${GRADLE_VERSION}-bin.zip \
+    && rm gradle-${GRADLE_VERSION}-bin.zip
 
-COPY src src
+ENV GRADLE_HOME=/opt/gradle
 
-RUN ./gradlew --no-daemon build
+RUN mv gradle-${GRADLE_VERSION} ${GRADLE_HOME}
 
-ENV JAVA_OPTS "-Xmx512M -Xms512M"
-EXPOSE 7070
+ENV PATH=$PATH:$GRADLE_HOME/bin
 
-CMD java -jar build/libs/HexletJavalin-1.0-SNAPSHOT-all.jar
+COPY ./ .
+
+RUN gradle installDist
+
+CMD ./build/install/java-javalin-blog/bin/java-javalin-blog
