@@ -18,4 +18,4 @@ COPY ./ .
 
 RUN gradle installDist
 
-CMD ./build/install/java-javalin-blog/bin/java-javalin-blog
+CMD ./build/install/HexletJavalin/bin/HexletJavalin
