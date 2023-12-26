@@ -66,7 +66,7 @@ public class HelloWorld {
 
 
         //courses
-        app.get(NamedRoutes.CoursesPath(), CoursesController::index);
+    app.get(NamedRoutes.CoursesPath(), CoursesController::index);
         app.get(NamedRoutes.BuildCoursePath(), CoursesController::build);
         app.post(NamedRoutes.CoursesPath(), CoursesController::create);
         app.get(NamedRoutes.CoursePath("{id}"), CoursesController::show);
