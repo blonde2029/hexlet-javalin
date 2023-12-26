@@ -1,6 +1,6 @@
 FROM eclipse-temurin:20-jdk
 
-WORKDIR /app
+WORKDIR /HexletJavalin
 
 COPY gradle gradle
 COPY build.gradle.kts .
