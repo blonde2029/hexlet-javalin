@@ -16,7 +16,6 @@ ENV PATH=$PATH:$GRADLE_HOME/bin
 
 COPY src ./src
 
-RUN dependency:resolve
 
 RUN gradle installDist
 
