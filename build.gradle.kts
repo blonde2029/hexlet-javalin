@@ -7,6 +7,7 @@ plugins {
     kotlin("plugin.lombok") version "1.9.21"
     id("io.freefair.lombok") version "8.1.0"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("com.github.ben-manes.versions") version "0.47.0"
 }
 application {
     mainClass.set("org.example.hexlet.HelloWorld")
