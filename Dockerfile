@@ -1,4 +1,4 @@
-FROM gradle:8.2.1-jdk17
+FROM gradle:8.2.1-jdk20
 
 WORKDIR /HexletJavalin
 
