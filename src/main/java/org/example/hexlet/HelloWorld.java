@@ -10,9 +10,10 @@ import org.example.hexlet.dto.BasePage;
 import org.example.hexlet.dto.NamedRoutes;
 import org.example.hexlet.repository.BaseRepository;
 
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.stream.Collectors;
@@ -26,14 +27,20 @@ public class HelloWorld {
         var app = getApp();
         app.start(getPort());
     }
+    private static String readResourceFile(String fileName) throws IOException {
+        var inputStream = HelloWorld.class.getClassLoader().getResourceAsStream(fileName);
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+            return reader.lines().collect(Collectors.joining("\n"));
+        }
+    }
     public static Javalin getApp() throws IOException, SQLException {
         var hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl("jdbc:h2:mem:hexlet_project;DB_CLOSE_DELAY=-1;");
         var dataSource = new HikariDataSource(hikariConfig);
-        var url = HelloWorld.class.getClassLoader().getResource("schema.sql");
-        var file = new File(url.getFile());
-        var sql = Files.lines(file.toPath()).collect(Collectors.joining());
-
+//        var url = HelloWorld.class.getClassLoader().getResource("schema.sql");
+//        var file = new File(url.getFile());
+//        var sql = Files.lines(file.toPath()).collect(Collectors.joining());
+        var sql = readResourceFile("schema.sql");
         try (var connection = dataSource.getConnection();
              var statement = connection.createStatement()) {
           statement.execute(sql);
